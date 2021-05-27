@@ -26,3 +26,62 @@
 <p>9.在start ipv6加一行set GIT_SSH=%DISK%:\putty\plink.exe</p>
 <p>成功截圖</p>
 <p><img alt="" height="512" src="/images/cmd_qtHKo7EJB0.png" width="979"/></p>
+<p></p>
+<p>w14</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false"># stage3_gen_html.py
+studList = "stage3_2a.txt"
+courTitle = "cd2021"
+
+# group title initial
+grpTitle = studList[:6] + "-" + studList[8] + "g"
+
+# student Account and github Account as inputs
+def perWeb(s, g):
+    pSite = "&lt;a href=\"https://" + g + ".github.io/" + courTitle + "\"&gt;" + s + " web&lt;/a&gt;"
+    print(pSite)
+
+def perRepo(s, g):
+    pSite = "&lt;a href=\"https://github.com/" + g + "/" + courTitle + "\"&gt;" + s + " repo&lt;/a&gt;"
+    print(pSite)
+    
+def grpWeb(s, g, ord):
+    pSite = "&lt;a href=\"https://" + g + ".github.io/" + grpTitle + str(ord) + "\"&gt;grp web&lt;/a&gt;"
+    print(pSite)
+    
+def grpRepo(s, g, ord):
+    pSite = "&lt;a href=\"https://github.com/" + g + "/" + grpTitle + str(ord) + "\"&gt;grp repo&lt;/a&gt;"
+    print(pSite)
+
+# open file, default is read mode, since txt content no chinese char
+# no encoding = "UTF-8" is needed
+with open(studList) as fh:
+    # readlines will read into the whole line and put into list format
+    # has \n at the end of each line
+    data = fh.readlines()
+
+grpCount = 0
+for i in range(len(data)):
+    # grpCount is the group order
+    grpCount = grpCount + 1
+    group = data[i].rstrip("\n").split("\t")
+    # use filter to remove vacant string element
+    # use [1:] to remove first element
+    group = list(filter(None, group))[1:]
+    print(grpTitle + str(grpCount) + "&lt;br /&gt;")
+    for j in range(0, len(group), 2):
+        # s is the student number
+        s = group[j]
+        # g is the github account
+        g = group[j+1]
+        perWeb(s, g)
+        print("|")
+        perRepo(s, g)
+        print("|")
+        grpWeb(s, g, grpCount)
+        print("|")
+        grpRepo(s, g, grpCount)
+        print("&lt;br /&gt;")</pre>
+<p>儲存檔名為stage3_gen_html.py<br/><br/></p>
+<p>再另存<a href="https://raw.githubusercontent.com/mdecourse/cd2021/main/downloads/stage3/stage3_2a.txt">網站</a>名為stage3_2a.txt</p>
+<p>在跑出結果</p>
+<p><img alt="" height="975" src="/images/SciTE_DLkoTjjQux.png" width="1242"/></p>
